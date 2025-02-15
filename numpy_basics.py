@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 # **********************************************************************************************************************
 # NumPy Cheat Sheet
@@ -7,16 +8,26 @@ import numpy as np
 # Creating NumPy 1D Arrays
 arr1 = np.array([1, 2, 3, 4, 5])  # Creating a 1D array
 print(arr1)
-# Output: [1 2 3 4 5]
+# Output: [1 2 3 4 5] type - int64 (or int32 depending on system)
 print(arr1.shape)  # Returns (rows, columns) a tuple representing the array’s dimensions
 # Output: (5,)
+
+print(arr1.dtype)
+# Output: int64
+
+# **********************************************************************************************************************
+
+# Converting an array to list
+arr_l = arr1.tolist()
+print(arr_l)
+# Output: [1, 2, 3, 4, 5] - type list
 
 # **********************************************************************************************************************
 
 # Reshaping one dimensional array into 2D
 arr1D = np.array([1, 2, 3, 4, 5])
 
-# Convert to a column vector (5 rows, 1 column)
+# Convert to a COLUMN vector (5 rows, 1 column)
 arr2D_col = arr1D.reshape(-1, 1)
 print(arr2D_col.shape)
 print(arr2D_col)
@@ -29,7 +40,7 @@ print(arr2D_col)
 #  [4]
 #  [5]]
 
-# Convert to a row vector (1 row, 5 columns)
+# Convert to a ROW vector (1 row, 5 columns)
 arr2D_row = arr1D.reshape(1, -1)
 print(arr2D_row.shape)
 print(arr2D_row)
@@ -143,6 +154,9 @@ print(arr[1:4])  # Slicing elements from index 1 to 3
 # Output: [20 30 40]
 
 arr2D_small = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+# [[1 2 3]
+#  [4 5 6]
+#  [7 8 9]]
 print(arr2D_small[1, 2])  # Accessing row 1, column 2
 # Output: 6
 
@@ -246,7 +260,7 @@ data = np.array([10, 15, 20, 25, 30])
 mask = data > 15  # Create a boolean mask
 filtered_data = data[mask]  # Apply mask to filter elements
 print(filtered_data)
-# Output: [20 25 30]
+# Output: [20 25 30]   return one dimensional array
 
 # Boolean mask to a 2D array, it returns a 1D array with only the elements that meet the condition,
 # flattened into a single dimension. The result is essentially a 1D array of the filtered values.
@@ -260,7 +274,7 @@ mask = data_2D > 20  # Create a boolean mask (True where element > 20)
 filtered_data_2D = data_2D[mask] # or data_2D[data_2D > 20]
 
 print(filtered_data_2D)
-# Output: [25 30 35 40 45 50]
+# Output: [25 30 35 40 45 50]   return one dimensional array
 
 # **********************************************************************************************************************
 
@@ -378,30 +392,30 @@ print(sorted_arr)
 
 # **********************************************************************************************************************
 
-# Mixing numbers and letters in a numpy array
+# Mixed array - numbers and letters in a numpy array
 
 # Create an array with both numbers and letters (strings)
 mixed_array = np.array([1, 2, 'a', 4, 'b'], dtype=object)
 print(mixed_array)
 # Output:
-# [1 2 'a' 4 'b']
+# [1 2 'a' 4 'b'] type - object
 
 # perform operations on a mixed array
 result = mixed_array + 1  # Adds 1 to the numeric elements
 print(result)
 # Output:
-# [2 3 'a' 5 'b']
+# [2 3 'a' 5 'b'] type - object
 
 # Create a numpy array with letters (strings)
 letters_array = np.array(['a', 'b', 'c', 'd', 'e'], dtype=object)
 print(letters_array)
 # Output:
-# ['a' 'b' 'c' 'd' 'e']
+# ['a' 'b' 'c' 'd' 'e'] type - object
 
 letters_with_none = np.array(['a', 'b', None, 'd'], dtype=object)
 print(letters_with_none)
 # Output:
-# ['a' 'b' None 'd']
+# ['a' 'b' None 'd'] type - object
 
 
 # Dates and Time
@@ -409,13 +423,7 @@ print(letters_with_none)
 date_array = np.array(['2023-01-01', '2023-01-02', '2023-01-03'], dtype='datetime64[D]')
 print(date_array)
 # Output:
-# ['2023-01-01' '2023-01-02' '2023-01-03']
-
-# Create an array of times
-time_array = np.array(['12:30:00', '14:45:00', '16:00:00'], dtype='datetime64[m]')
-print(time_array)
-# Output:
-# ['2023-01-01T12:30' '2023-01-01T14:45' '2023-01-01T16:00']
+# ['2023-01-01' '2023-01-02' '2023-01-03'] type - datetime64[D]
 
 
 # Performing Date Arithmetic
@@ -521,5 +529,49 @@ for num in np.nditer(arr2D_for):
 # 4
 # 5
 # 6
+
+# **********************************************************************************************************************
+
+# Crating a data frame from arrays
+employee_ID = np.array([101, 102, 103, 104, 105])
+name = np.array(['Alice', 'Bob', 'Charlie', 'David', 'Eva'], dtype=object)
+age = np.array([28, 34, 29, 45, 38])
+
+df = pd.DataFrame({'Employee_ID': employee_ID, 'Name': name, 'Age': age})
+
+
+# Creating a DataFrame using a list of columns
+cols = ['Employee_ID', 'Name', 'Age']
+data = np.column_stack((employee_ID, name, age))  # Stack arrays column-wise
+
+df_stacked = pd.DataFrame(data, columns=cols)
+
+# Output:
+#   Employee_ID     Name Age
+# 0         101    Alice  28
+# 1         102      Bob  34
+# 2         103  Charlie  29
+# 3         104    David  45
+# 4         105      Eva  38
+
+# **********************************************************************************************************************
+
+# Creating an array from a series
+df_company = pd.DataFrame({
+    'Employee_ID': [101, 102, 103, 104, 105],
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva']})
+
+arr_id = np.array(df_company['Employee_ID'])
+arr_name = np.array(df_company['Name'], dtype='object')
+
+print(arr_id)
+print(arr_id.shape)
+# [101 102 103 104 105]
+# (5,)
+
+print(arr_name)
+print(arr_name.shape)
+# ['Alice' 'Bob' 'Charlie' 'David' 'Eva']
+# (5,)
 
 # **********************************************************************************************************************
