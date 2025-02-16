@@ -26,7 +26,7 @@ print(df.head())
 
 # Number of rows
 num_rows = df.shape[0] # gives the number of Rows in the DataFrame
-rows = len(df)  # Same as df.shape[0]
+rows = len(df)  # Same as df.shape[0] - gives the number of Rows in the DataFrame
 # 7
 
 # Number of columns
@@ -129,7 +129,7 @@ print(df.info())
 #  4   status    6 non-null      object
 #  5   age       6 non-null      float64
 #  6   degree    7 non-null      bool
-#  7   birthday  7 non-null      datetime64[ns]
+#  7   birthday  7 non-null      datetime64[ns]   ***** used to be an object
 # dtypes: bool(1), datetime64[ns](1), float64(2), object(4)
 
 # Impute missing values for numeric columns (rate, age) with their mean
@@ -137,6 +137,7 @@ df['id'] = df['id'].fillna(df['id'].mean().astype(int))
 df['age'] = df['age'].fillna(df['age'].mean()).astype(int)
 
 # Impute missing values for categorical columns (status, type) with their mode
+# returns a Series containing the most frequent value(s) in the 'status' column, which is Active
 df['status'] = df['status'].fillna(df['status'].mode()[0])
 
 #     id   name  rate  type    status  age  degree   birthday
@@ -148,6 +149,7 @@ df['status'] = df['status'].fillna(df['status'].mode()[0])
 # 5  106   nata  20.0  1099      hold   20    True 2005-01-12
 # 6  107  larry   NaN   NaN  inactive   45    True 1980-11-01
 
+
 # Get rows with NaN values
 rows_with_nan = df[df.isna().any(axis=1)]
 print(rows_with_nan)
@@ -156,6 +158,7 @@ print(rows_with_nan)
 # 6  107  larry   NaN  NaN  inactive   45    True 1980-11-01
 
 # at this point it's clear that the last row needs to drop because rate and type are unknown
+# drop rows with Nan
 df.dropna(inplace=True)
 
 #     id   name  rate  type  status  age  degree   birthday

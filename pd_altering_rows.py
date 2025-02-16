@@ -50,7 +50,7 @@ print('\n',df_company)
 # 4          105      Eva   38         IT   65000       False
 
 # Update the entire row for Charlie (index 2)
-df_company.loc[1] = [102, 'Bobby', 35, 'Operation', 61575, False]  # Update all columns for Charlie
+df_company.loc[1] = [102, 'Bobby', 35, 'Operation', 61575, False]  # Update all columns for Bob
 print('\n',df_company)
 #     Employee_ID     Name  Age Department  Salary  Is_Manager
 # 0          101    Alice   28         HR   50000       False
@@ -144,6 +144,22 @@ print('\n',df_company)
 # 7          107     John   45     Intake   31000       False
 # **********************************************************************************************************************
 
-# totals on the bottom of the data set
+# Adding the sum of Salary
+# Summing up the Salary column
+sum_salary = df_company['Salary'].sum()
+
+# Add totals row
+df_company.loc[len(df_company)] = ['Totals', '', '', '', sum_salary, '']
+print(df_company)
+
+#   Employee_ID     Name Age Department  Salary Is_Manager
+# 0         101    Alice  28         HR   50000      False
+# 1         102      Bob  34         IT   60000       True
+# 2         103  Charlie  29    Finance   55000      False
+# 3         104    David  45  Marketing   70000       True
+# 4         105      Eva  38         IT   65000      False
+# 5      Totals                          300000
+# **********************************************************************************************************************
+
 
 

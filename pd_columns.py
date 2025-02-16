@@ -218,3 +218,53 @@ print(df_dates)
 # 2  15-Nov-2023   2023-11-15
 # **********************************************************************************************************************
 
+# Renaming Columns
+# Create a sample DataFrame
+id_name = {'id': [101, 102],
+           'name': ['sam', 'zack']}
+df = pd.DataFrame(id_name)
+
+print("Original DataFrame:")
+print(df)
+# Output:
+#    id  name
+# 0  101   sam
+# 1  102  zack
+
+# Method 1: Renaming columns again using `df.columns = [...]`
+# This method directly assigns a new list of column names again, replacing the old ones.
+df.columns = ['id number', 'first name']
+
+print("\nUpdated DataFrame (Method 1: Using df.columns = [...] again):")
+print(df)
+# Output:
+#    id number first name
+# 0        101        sam
+# 1        102       zack
+
+# Method 2: Renaming columns using `df.rename(columns={...})`
+# passing a dictionary where the keys are the old column names,
+# and the values are the new column names, can rename specific columns only.
+df = df.rename(columns={'id number': 'id number', 'first name': 'first name'})
+
+print("\nUpdated DataFrame (Method 2: Using df.rename(columns={...})): ")
+print(df)
+# Output:
+#    id number first name
+# 0        101        sam
+# 1        102       zack
+
+# Method 3: Renaming columns using `df.columns = [...]`
+# directly overwrite the columns with a new list of column names
+# number of elements in the list must match the number of columns in df
+new_col = ['id number', 'first name']
+df.columns = new_col
+
+print("\nFinal Updated DataFrame (Method 3: Using df.columns = [...]):")
+print(df)
+# Output:
+#    id number first name
+# 0        101        sam
+# 1        102       zack
+
+# **********************************************************************************************************************

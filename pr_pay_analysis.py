@@ -3,6 +3,7 @@ pd.options.display.width = 0
 
 # **********************************************************************************************************************
 # Employee Pay Analysis and Location Aggregation PROJECT
+# Merging more than 2 data frames
 # **********************************************************************************************************************
 
 # This project involves analyzing employee pay data, aggregating hours worked and amounts earned,
